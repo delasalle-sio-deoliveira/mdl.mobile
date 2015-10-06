@@ -1,4 +1,4 @@
-<?php
+ <?php
 // -------------------------------------------------------------------------------------------------------------------------
 //                                                 DAO : Data Access Object
 //                   Cette classe fournit des méthodes d'accès à la bdd mrbs (projet Réservations M2L)
@@ -123,7 +123,7 @@ class DAO
 		return $digicode;
 	}	
 	
-	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
+	// esim à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
 	// cette fonction peut dépanner en cas d'absence des triggers chargés de créer les digicodes
 	// modifié par Jim le 5/5/2015
 	public function creerLesDigicodesManquants()
