@@ -521,7 +521,7 @@ class DAO
 	// recherche si un utilisateur a passé des réservations à venir et retourne un booléen
 	// modifié par Jim le 6/5/2015
 	public function aPasseDesReservations($name)
-	{	// A FAIRE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	{	//  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 	
 	// supprime l'utilisateur dans la bdd
