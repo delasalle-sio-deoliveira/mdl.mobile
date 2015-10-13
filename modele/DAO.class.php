@@ -499,7 +499,30 @@ class DAO
 	// fournit la valeur 0 si le digicode n'est pas bon, 1 si le digicode est bon
 	// modifié par Jim le 18/5/2015
 	public function testerDigicodeBatiment($digicodeSaisi)
-	{	// A FAIRE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	{	
+		$txt_req = "Select count(*)";
+		$txt_req = $txt_req . " from mrbs_entry, mrbs_entry_digicode";
+		$txt_req = $txt_req . " where mrbs_entry.id = mrbs_entry_digicode.id";
+		$txt_req = $txt_req . " and digicode = :digicodeSaisi";
+		$txt_req = $txt_req . " and (start_time - :delaiDigicode) < " . time();
+		$txt_req = $txt_req . " and (end_time + :delaiDigicode) > " . time();
+		
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et de ses paramètres
+		$req->bindValue("digicodeSaisi", $digicodeSaisi, PDO::PARAM_STR);
+		$req->bindValue("delaiDigicode", $DELAI_DIGICODE, PDO::PARAM_INT);
+		
+		// exécution de la requete
+		$req->execute();
+		$nbReponses = $req->fetchColumn(0);
+		// libère les ressources du jeu de données
+		$req->closeCursor();
+		
+		// fourniture de la réponse
+		if ($nbReponses == 0)
+			return "0";
+		else
+			return "1";
 	}
 
 	// enregistre l'utilisateur dans la bdd
@@ -528,8 +551,15 @@ class DAO
 	// modifié par Jim le 6/5/2015
 	public function supprimerUtilisateur($name)
 	{	
-		//récupération de reservations 
-		
+		{	// préparation de la requete
+		$txt_req = "delete from mrbs_users where name = :name";
+		$req = $this->cnx->prepare($txt_req);
+		// liaison de la requête et de ses paramètres
+		$req->bindValue("name", utf8_decode($name), PDO::PARAM_STR);
+		// exécution de la requete
+		$ok = $req->execute();
+		return $ok ;
+	}
 	}	
 	
 	// fournit la liste des salles disponibles à la réservation
