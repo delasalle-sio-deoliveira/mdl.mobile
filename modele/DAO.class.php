@@ -457,7 +457,24 @@ class DAO
 	// modifié par Jim le 6/5/2015
 	public function envoyerMdp($nomUser, $nouveauMdp)
 	{	
+		//hashage du mot de passe en MD5
+		$mdp=md5($nouveauMdp);
 		
+		//préparation de la requete de recherche
+		$txt_req = "Update mrbs_users ";
+		$txt_req = $txt_req . "set password = :nouveauMdp ";
+		$txt_req = $txt_req . "where name = :nomUser ;";
+		$req=$this->cnx->prepare($txt_req);
+		
+		//liaison de la requête et de ses paramètres
+		$req->bindValue("nomUser",$nomUser,PDO::PARAM_STR);
+		$req->bindValue("nouveauMdp",$mdp,PDO::PARAM_STR);
+		
+		// exécution de la requete
+		$req->execute();
+		
+		// libère les ressources du jeu de données
+		$req->closeCursor();
 	}
 
 	// teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
@@ -499,7 +516,8 @@ class DAO
 	// fournit la valeur 0 si le digicode n'est pas bon, 1 si le digicode est bon
 	// modifié par Jim le 18/5/2015
 	public function testerDigicodeBatiment($digicodeSaisi)
-	{	// A FAIRE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	{	
+		
 	}
 
 	// enregistre l'utilisateur dans la bdd
@@ -528,8 +546,7 @@ class DAO
 	// modifié par Jim le 6/5/2015
 	public function supprimerUtilisateur($name)
 	{	
-		//récupération de reservations 
-		
+				
 	}	
 	
 	// fournit la liste des salles disponibles à la réservation
